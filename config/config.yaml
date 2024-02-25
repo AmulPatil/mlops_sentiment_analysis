@@ -1,0 +1,29 @@
+artifacts_root: artifacts
+
+
+data_ingestion:
+  root_dir: artifacts/data_ingestion
+  source_URL: https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz
+  local_data_file: artifacts/data_ingestion/*.gz
+  unzip_dir: artifacts/data_ingestion
+
+data_cleaning:
+  common_dir:  artifacts/data_ingestion
+  data_cleaned_dir: artifacts/data_cleaning
+  data_transformer: artifacts/data_cleaning/transformer
+  data_non_transformer: artifacts/data_cleaning/basic_ml
+
+
+prepare_base_model:
+  root_dir: artifacts/prepare_base_model
+  base_model_path: artifacts/prepare_base_model/base_model.pkl
+  updated_base_model_path: artifacts/prepare_base_model/base_model_updated.pkl
+
+
+
+
+training:
+  root_dir: artifacts/training
+  base_model_path: artifacts/prepare_base_model/base_model.pkl
+  trained_model_path: artifacts/training/model.pkl
+
