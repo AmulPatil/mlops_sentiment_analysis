@@ -8,86 +8,25 @@ This project demonstrates the integration of DVC (Data Version Control) and Dags
 ## Project Structure
 
 ```plaintext
-├── data/
-│   ├── raw/                  # Raw data files
-│   ├── processed/            # Processed data ready for modeling
-├── src/
-│   ├── train.py              # Script to train the sentiment analysis model
-│   ├── evaluate.py           # Script to evaluate the model
-│   ├── preprocess.py         # Data preprocessing script
-├── models/
-│   ├── model.pkl             # Trained sentiment analysis model
+├── src/sentiment_analysis
+│   ├── pipeline/stage_01_data_ingestion.py          # Raw data collection
+│   ├── pipeline/stage_02_data_cleaning.py              # Processed data ready for modeling
+├── src/sentiment_analysis
+│   ├── pipeline/stage_03_prepare_base_model.py             # Script to prepare base model
+│   ├── pipeline/stage_04_model_trainer.py                   # Script to train the sentiment analysis model
+    ├── pipeline/stage_05_model_evaluation.py                 # Script to evaluate the model
+│   
+├── artifacts/
+│   ├── data_ingestion/raw.gzip             # raw data stored
+│   ├── data_cleaning/processed_data.csv             # processed data
+│   ├── prepare_base_model/model.pkl             # base model stored
+│   ├── training/model.pkl             # Trained sentiment analysis model
 ├── dvc.yaml                  # DVC pipeline configuration
 ├── params.yaml               # Parameters for training and evaluation
 ├── requirements.txt          # Python package dependencies
-├── README.md                 # Project documentation
-└── .dvc/                     # DVC metadata
 ```
 
-## Setup Instructions
-
-### Step 1: Install Dependencies
-
-Ensure Python 3.7+ is installed, then install the required packages:
-
-```bash
-pip install -r requirements.txt
-```
-
-### Step 2: DVC Setup
-
-1. Initialize DVC in the project:
-
-    ```bash
-    dvc init
-    ```
-
-2. Add the data files to DVC:
-
-    ```bash
-    dvc add data/raw/
-    ```
-
-3. Track the `data/` directory with Git:
-
-    ```bash
-    git add data/.gitignore data/raw.dvc
-    git commit -m "Add raw data to DVC"
-    ```
-
-### Step 3: DagsHub-MLflow Integration
-
-1. Connect the project to DagsHub for MLflow tracking:
-
-    - Link your repository with DagsHub.
-    - Configure MLflow tracking URI to point to DagsHub:
-
-    ```bash
-    export MLFLOW_TRACKING_URI=https://dagshub.com/your-username/your-repo.mlflow
-    ```
-
-2. Run the training script with MLflow logging:
-
-    ```bash
-    python src/train.py
-    ```
-
-### Step 4: Run the DVC Pipeline
-
-1. Define the DVC pipeline in `dvc.yaml` and link stages:
-
-    ```bash
-    dvc run -n preprocess -d src/preprocess.py -o data/processed/ python src/preprocess.py
-    dvc run -n train -d src/train.py -d data/processed/ -o models/model.pkl python src/train.py
-    ```
-
-2. Execute the pipeline:
-
-    ```bash
-    dvc repro
-    ```
-
-### Step 5: Track and Visualize Results
+### Track and Visualize Results
 
 - Use DagsHub to visualize MLflow experiments, model metrics, and artifacts.
 - Version control your data and models with DVC.
