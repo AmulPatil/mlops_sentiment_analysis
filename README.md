@@ -34,4 +34,3 @@ This project demonstrates the integration of DVC (Data Version Control) and Dags
 ## Conclusion
 
 This project illustrates how to effectively integrate DVC and DagsHub's MLflow for managing data, experiments, and models in a sentiment analysis pipeline.
-```
